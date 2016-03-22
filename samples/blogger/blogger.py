@@ -68,7 +68,7 @@ def main(argv):
       for blog in thisusersblogs['items']:
         print('The posts for %s:' % blog['name'])
         request = posts.list(blogId=blog['id'])
-        while request != None:
+        while request is not None:
           posts_doc = request.execute()
           if 'items' in posts_doc and not (posts_doc['items'] is None):
             for post in posts_doc['items']:
