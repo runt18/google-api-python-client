@@ -32,7 +32,7 @@ from oauth2client import file
 from oauth2client import tools
 
 
-def init(argv, name, version, doc, filename, scope=None, parents=[], discovery_filename=None):
+def init(argv, name, version, doc, filename, scope=None, parents=None, discovery_filename=None):
   """A common initialization routine for samples.
 
   Many of the sample applications do the same initialization, which has now
@@ -56,6 +56,8 @@ def init(argv, name, version, doc, filename, scope=None, parents=[], discovery_f
     A tuple of (service, flags), where service is the service object and flags
     is the parsed command-line flags.
   """
+  if parents is None:
+    parents = []
   if scope is None:
     scope = 'https://www.googleapis.com/auth/' + name
 
