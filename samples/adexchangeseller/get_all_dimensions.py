@@ -44,8 +44,7 @@ def main(argv):
       if 'items' in result:
         dimensions = result['items']
         for dimension in dimensions:
-          print(('Dimension id "%s" for product(s): [%s] was found. '
-                 % (dimension['id'], ', '.join(dimension['supportedProducts']))))
+          print(('Dimension id "{0!s}" for product(s): [{1!s}] was found. '.format(dimension['id'], ', '.join(dimension['supportedProducts']))))
       else:
         print('No dimensions found!')
   except client.AccessTokenRefreshError:

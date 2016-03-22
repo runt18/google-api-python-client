@@ -246,7 +246,7 @@ def notification_from_headers(channel, headers):
   channel_id = headers[X_GOOG_CHANNEL_ID]
   if channel.id != channel_id:
     raise errors.InvalidNotificationError(
-        'Channel id mismatch: %s != %s' % (channel.id, channel_id))
+        'Channel id mismatch: {0!s} != {1!s}'.format(channel.id, channel_id))
   else:
     message_number = int(headers[X_GOOG_MESSAGE_NUMBER])
     state = headers[X_GOOG_RESOURCE_STATE]

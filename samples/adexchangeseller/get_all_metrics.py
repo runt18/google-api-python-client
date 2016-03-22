@@ -44,8 +44,7 @@ def main(argv):
       if 'items' in result:
         metrics = result['items']
         for metric in metrics:
-          print(('Metric id "%s" for product(s): [%s] was found. '
-                 % (metric['id'], ', '.join(metric['supportedProducts']))))
+          print(('Metric id "{0!s}" for product(s): [{1!s}] was found. '.format(metric['id'], ', '.join(metric['supportedProducts']))))
       else:
         print('No metrics found!')
   except client.AccessTokenRefreshError:

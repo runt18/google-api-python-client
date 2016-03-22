@@ -251,7 +251,7 @@ def breadcrumbs(path, root_discovery):
     display = p
     if i == 0:
       display = root_discovery.get('title', display)
-    crumbs.append('<a href="%s.html">%s</a>' % (prefix + p, display))
+    crumbs.append('<a href="{0!s}.html">{1!s}</a>'.format(prefix + p, display))
     accumulated.append(p)
 
   return ' . '.join(crumbs)
@@ -274,7 +274,7 @@ def document_collection(resource, path, root_discovery, discovery, css=CSS):
   html = [
       '<html><body>',
       css,
-      '<h1>%s</h1>' % breadcrumbs(path[:-1], root_discovery),
+      '<h1>{0!s}</h1>'.format(breadcrumbs(path[:-1], root_discovery)),
       '<h2>Instance Methods</h2>'
       ]
 
@@ -351,7 +351,7 @@ def document_api(name, version):
   version = safe_version(version)
 
   document_collection_recursive(
-      service, '%s_%s.' % (name, version), discovery, discovery)
+      service, '{0!s}_{1!s}.'.format(name, version), discovery, discovery)
 
 
 def document_api_from_discovery_document(uri):
@@ -370,7 +370,7 @@ def document_api_from_discovery_document(uri):
   version = safe_version(discovery['version'])
 
   document_collection_recursive(
-      service, '%s_%s.' % (name, version), discovery, discovery)
+      service, '{0!s}_{1!s}.'.format(name, version), discovery, discovery)
 
 
 if __name__ == '__main__':

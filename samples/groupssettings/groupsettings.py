@@ -54,11 +54,11 @@ WARNING: Please configure OAuth 2.0
 To make this sample run you will need to populate the client_secrets.json file
 found at:
 
-   %s
+   {0!s}
 
 with information from the APIs Console <https://code.google.com/apis/console>.
 
-""" % os.path.join(os.path.dirname(__file__), CLIENT_SECRETS)
+""".format(os.path.join(os.path.dirname(__file__), CLIENT_SECRETS))
 
 
 def access_settings(service, groupId, settings):
@@ -76,7 +76,7 @@ def access_settings(service, groupId, settings):
 
   # Retrieve the group properties
   g = group.get(groupUniqueId=groupId).execute()
-  print('\nGroup properties for group %s\n' % g['name'])
+  print('\nGroup properties for group {0!s}\n'.format(g['name']))
   pprint.pprint(g)
 
   # If dictionary is empty, return without updating the properties.

@@ -131,7 +131,7 @@ def main(argv):
       body = {'input': {'csvInstance': [sample_text]}}
       result = papi.predict(
         body=body, id=flags.model_id, project=flags.project_id).execute()
-      print('Prediction results for "%s"...' % sample_text)
+      print('Prediction results for "{0!s}"...'.format(sample_text))
       pprint.pprint(result)
 
     # Delete model.

@@ -86,8 +86,8 @@ def _retry_request(http, num_retries, req_type, sleep, rand, uri, method, *args,
     if retry_num > 0:
       sleep(rand() * 2**retry_num)
       logging.warning(
-          'Retry #%d for %s: %s %s%s' % (retry_num, req_type, method, uri,
-          ', following status: %d' % resp.status if resp else ''))
+          'Retry #{0:d} for {1!s}: {2!s} {3!s}{4!s}'.format(retry_num, req_type, method, uri,
+          ', following status: {0:d}'.format(resp.status) if resp else ''))
 
     try:
       resp, content = http.request(uri, method, *args, **kwargs)
@@ -582,7 +582,7 @@ class MediaIoBaseDownload(object):
       httplib2.HttpLib2Error if a transport error has occured.
     """
     headers = {
-        'range': 'bytes=%d-%d' % (
+        'range': 'bytes={0:d}-{1:d}'.format(
             self._progress, self._progress + self._chunksize)
         }
     http = self._request.http
@@ -839,7 +839,7 @@ class HttpRequest(object):
       # the upload by sending an empty PUT and reading the 'range' header in
       # the response.
       headers = {
-          'Content-Range': 'bytes */%s' % size,
+          'Content-Range': 'bytes */{0!s}'.format(size),
           'content-length': '0'
           }
       resp, content = http.request(self.resumable_uri, 'PUT',
@@ -872,7 +872,7 @@ class HttpRequest(object):
       chunk_end = self.resumable_progress + len(data) - 1
 
     headers = {
-        'Content-Range': 'bytes %d-%d/%s' % (
+        'Content-Range': 'bytes {0:d}-{1:d}/{2!s}'.format(
             self.resumable_progress, chunk_end, size),
         # Must set the content-length header here because httplib can't
         # calculate the size when working with _StreamSlice.
@@ -883,8 +883,7 @@ class HttpRequest(object):
       if retry_num > 0:
         self._sleep(self._rand() * 2**retry_num)
         logging.warning(
-            'Retry #%d for media upload: %s %s, following status: %d'
-            % (retry_num, self.method, self.uri, resp.status))
+            'Retry #{0:d} for media upload: {1!s} {2!s}, following status: {3:d}'.format(retry_num, self.method, self.uri, resp.status))
 
       try:
         resp, content = http.request(self.resumable_uri, method='PUT',
@@ -1071,7 +1070,7 @@ class BatchHttpRequest(object):
     if self._base_id is None:
       self._base_id = uuid.uuid4()
 
-    return '<%s+%s>' % (self._base_id, quote(id_))
+    return '<{0!s}+{1!s}>'.format(self._base_id, quote(id_))
 
   def _header_to_id(self, header):
     """Convert a Content-ID header value to an id.
@@ -1089,9 +1088,9 @@ class BatchHttpRequest(object):
       BatchError if the header is not in the expected format.
     """
     if header[0] != '<' or header[-1] != '>':
-      raise BatchError("Invalid value for Content-ID: %s" % header)
+      raise BatchError("Invalid value for Content-ID: {0!s}".format(header))
     if '+' not in header:
-      raise BatchError("Invalid value for Content-ID: %s" % header)
+      raise BatchError("Invalid value for Content-ID: {0!s}".format(header))
     base, id_ = header[1:-1].rsplit('+', 1)
 
     return unquote(id_)
@@ -1216,7 +1215,7 @@ class BatchHttpRequest(object):
     if request.resumable is not None:
       raise BatchError("Media requests cannot be used in a batch request.")
     if request_id in self._requests:
-      raise KeyError("A request with this ID already exists: %s" % request_id)
+      raise KeyError("A request with this ID already exists: {0!s}".format(request_id))
     self._requests[request_id] = request
     self._callbacks[request_id] = callback
     self._order.append(request_id)
@@ -1268,7 +1267,7 @@ class BatchHttpRequest(object):
       raise HttpError(resp, content, uri=self._batch_uri)
 
     # Prepend with a content-type header so FeedParser can handle it.
-    header = 'content-type: %s\r\n\r\n' % resp['content-type']
+    header = 'content-type: {0!s}\r\n\r\n'.format(resp['content-type'])
     # PY3's FeedParser only accepts unicode. So we should decode content
     # here, and encode each payload again.
     if six.PY3:

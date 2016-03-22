@@ -838,7 +838,7 @@ class Discovery(unittest.TestCase):
         'range': '0-12'}, ''),
       ({'status': '308',
         'location': 'http://upload.example.com/3',
-        'range': '0-%d' % (media_upload.size() - 2)}, ''),
+        'range': '0-{0:d}'.format((media_upload.size() - 2))}, ''),
       ({'status': '200'}, '{"foo": "bar"}'),
       ])
 
@@ -887,7 +887,7 @@ class Discovery(unittest.TestCase):
         'range': '0-12'}, ''),
       ({'status': '308',
         'location': 'http://upload.example.com/3',
-        'range': '0-%d' % (media_upload.size() - 2)}, ''),
+        'range': '0-{0:d}'.format((media_upload.size() - 2))}, ''),
       ({'status': '200'}, '{"foo": "bar"}'),
       ])
 
@@ -932,7 +932,7 @@ class Discovery(unittest.TestCase):
         'range': '0-12'}, ''),
       ({'status': '308',
         'location': 'http://upload.example.com/3',
-        'range': '0-%d' % media_upload.size()}, ''),
+        'range': '0-{0:d}'.format(media_upload.size())}, ''),
       ({'status': '200'}, '{"foo": "bar"}'),
       ])
 

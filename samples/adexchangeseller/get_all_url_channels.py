@@ -56,8 +56,7 @@ def main(argv):
 
       url_channels = result['items']
       for url_channel in url_channels:
-        print(('URL channel with URL pattern "%s" was found.'
-               % url_channel['urlPattern']))
+        print(('URL channel with URL pattern "{0!s}" was found.'.format(url_channel['urlPattern'])))
 
       request = service.customchannels().list_next(request, result)
 

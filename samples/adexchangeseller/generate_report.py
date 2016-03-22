@@ -69,13 +69,13 @@ def main(argv):
       sys.exit(1)
     # Display headers.
     for header in result['headers']:
-      print('%25s' % header['name'], end=' ')
+      print('{0:25!s}'.format(header['name']), end=' ')
     print()
 
     # Display results.
     for row in result['rows']:
       for column in row:
-        print('%25s' % column, end=' ')
+        print('{0:25!s}'.format(column), end=' ')
       print()
 
   except client.AccessTokenRefreshError:

@@ -44,8 +44,7 @@ def main(argv):
       if 'items' in result:
         alerts = result['items']
         for alert in alerts:
-          print(('Alert id "%s" with severity "%s" and type "%s" was found. '
-                 % (alert['id'], alert['severity'], alert['type'])))
+          print(('Alert id "{0!s}" with severity "{1!s}" and type "{2!s}" was found. '.format(alert['id'], alert['severity'], alert['type'])))
       else:
         print('No alerts found!')
   except client.AccessTokenRefreshError:

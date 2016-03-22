@@ -101,7 +101,7 @@ class Schemas(object):
 
     if name in seen:
       # Do not fall into an infinite loop over recursive definitions.
-      return '# Object with schema name: %s' % name
+      return '# Object with schema name: {0!s}'.format(name)
     seen.append(name)
 
     if name not in self.pretty:
@@ -252,7 +252,7 @@ class _SchemaToStruct(object):
       self.indent()
       if 'properties' in schema:
         for pname, pschema in six.iteritems(schema.get('properties', {})):
-          self.emitBegin('"%s": ' % pname)
+          self.emitBegin('"{0!s}": '.format(pname))
           self._to_str_impl(pschema)
       elif 'additionalProperties' in schema:
         self.emitBegin('"a_key": ')
@@ -269,16 +269,16 @@ class _SchemaToStruct(object):
         self.emit(line.rstrip())
     elif stype == 'boolean':
       value = schema.get('default', 'True or False')
-      self.emitEnd('%s,' % str(value), schema.get('description', ''))
+      self.emitEnd('{0!s},'.format(str(value)), schema.get('description', ''))
     elif stype == 'string':
       value = schema.get('default', 'A String')
-      self.emitEnd('"%s",' % str(value), schema.get('description', ''))
+      self.emitEnd('"{0!s}",'.format(str(value)), schema.get('description', ''))
     elif stype == 'integer':
       value = schema.get('default', '42')
-      self.emitEnd('%s,' % str(value), schema.get('description', ''))
+      self.emitEnd('{0!s},'.format(str(value)), schema.get('description', ''))
     elif stype == 'number':
       value = schema.get('default', '3.14')
-      self.emitEnd('%s,' % str(value), schema.get('description', ''))
+      self.emitEnd('{0!s},'.format(str(value)), schema.get('description', ''))
     elif stype == 'null':
       self.emitEnd('None,', schema.get('description', ''))
     elif stype == 'any':
@@ -291,7 +291,7 @@ class _SchemaToStruct(object):
       self.undent()
       self.emit('],')
     else:
-      self.emit('Unknown type! %s' % stype)
+      self.emit('Unknown type! {0!s}'.format(stype))
       self.emitEnd('', '')
 
     self.string = ''.join(self.value)
