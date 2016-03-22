@@ -142,7 +142,7 @@ class BaseModel(Model):
       headers['user-agent'] += ' '
     else:
       headers['user-agent'] = ''
-    headers['user-agent'] += 'google-api-python-client/%s (gzip)' % __version__
+    headers['user-agent'] += 'google-api-python-client/{0!s} (gzip)'.format(__version__)
 
     if body_value is not None:
       headers['content-type'] = self.content_type
@@ -206,7 +206,7 @@ class BaseModel(Model):
         return self.no_content_response
       return self.deserialize(content)
     else:
-      logging.debug('Content from bad request was: %s' % content)
+      logging.debug('Content from bad request was: {0!s}'.format(content))
       raise HttpError(resp, content)
 
   def serialize(self, body_value):

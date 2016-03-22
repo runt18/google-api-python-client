@@ -56,10 +56,10 @@ class HttpError(Error):
 
   def __repr__(self):
     if self.uri:
-      return '<HttpError %s when requesting %s returned "%s">' % (
+      return '<HttpError {0!s} when requesting {1!s} returned "{2!s}">'.format(
           self.resp.status, self.uri, self._get_reason().strip())
     else:
-      return '<HttpError %s "%s">' % (self.resp.status, self._get_reason())
+      return '<HttpError {0!s} "{1!s}">'.format(self.resp.status, self._get_reason())
 
   __str__ = __repr__
 
@@ -117,7 +117,7 @@ class BatchError(HttpError):
     self.reason = reason
 
   def __repr__(self):
-      return '<BatchError %s "%s">' % (self.resp.status, self.reason)
+      return '<BatchError {0!s} "{1!s}">'.format(self.resp.status, self.reason)
 
   __str__ = __repr__
 
@@ -129,7 +129,7 @@ class UnexpectedMethodError(Error):
   def __init__(self, methodId=None):
     """Constructor for an UnexpectedMethodError."""
     super(UnexpectedMethodError, self).__init__(
-        'Received unexpected call %s' % methodId)
+        'Received unexpected call {0!s}'.format(methodId))
 
 
 class UnexpectedBodyError(Error):
@@ -138,4 +138,4 @@ class UnexpectedBodyError(Error):
   def __init__(self, expected, provided):
     """Constructor for an UnexpectedMethodError."""
     super(UnexpectedBodyError, self).__init__(
-        'Expected: [%s] - Provided: [%s]' % (expected, provided))
+        'Expected: [{0!s}] - Provided: [{1!s}]'.format(expected, provided))

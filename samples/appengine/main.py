@@ -59,12 +59,12 @@ To make this sample run you will need to populate the client_secrets.json file
 found at:
 </p>
 <p>
-<code>%s</code>.
+<code>{0!s}</code>.
 </p>
 <p>with information found on the <a
 href="https://code.google.com/apis/console">APIs Console</a>.
 </p>
-""" % CLIENT_SECRETS
+""".format(CLIENT_SECRETS)
 
 
 http = httplib2.Http(memcache)
@@ -93,7 +93,7 @@ class AboutHandler(webapp2.RequestHandler):
     try:
       http = decorator.http()
       user = service.people().get(userId='me').execute(http=http)
-      text = 'Hello, %s!' % user['displayName']
+      text = 'Hello, {0!s}!'.format(user['displayName'])
 
       template = JINJA_ENVIRONMENT.get_template('welcome.html')
       self.response.write(template.render({'text': text }))

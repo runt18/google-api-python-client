@@ -37,9 +37,9 @@ def main(argv):
   try:
     person = service.people().get(userId='me').execute()
 
-    print('Got your ID: %s' % person['displayName'])
+    print('Got your ID: {0!s}'.format(person['displayName']))
     print()
-    print('%-040s -> %s' % ('[Activitity ID]', '[Content]'))
+    print('{0:<40!s} -> {1!s}'.format('[Activitity ID]', '[Content]'))
 
     # Don't execute the request until we reach the paging loop below.
     request = service.activities().list(
@@ -49,7 +49,7 @@ def main(argv):
     while request is not None:
       activities_doc = request.execute()
       for item in activities_doc.get('items', []):
-        print('%-040s -> %s' % (item['id'], item['object']['content'][:30]))
+        print('{0:<40!s} -> {1!s}'.format(item['id'], item['object']['content'][:30]))
 
       request = service.activities().list_next(request, activities_doc)
 

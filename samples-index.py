@@ -89,7 +89,7 @@ def wiki_escape(s):
   ret = []
   for word in s.split():
     if re.match(r'[A-Z]+[a-z]+[A-Z]', word):
-      word = '!%s' % word
+      word = '!{0!s}'.format(word)
     ret.append(word)
   return ' '.join(ret)
 
@@ -185,7 +185,7 @@ def scan_readme_files(dirname):
         for k in keywords:
           if k not in KEYWORDS:
             raise ValueError(
-                '%s is not a valid keyword in file %s' % (k, filename))
+                '{0!s} is not a valid keyword in file {1!s}'.format(k, filename))
         keyword_set.update(keywords)
         if not api:
           api = [None]
@@ -212,22 +212,22 @@ def main():
       continue
     if current_api != api:
       page.append("""
-=== %(api_icon)s %(api_name)s ===
+=== {api_icon!s} {api_name!s} ===
 
-%(api_desc)s
+{api_desc!s}
 
-Documentation for the %(api_name)s in [https://google-api-client-libraries.appspot.com/documentation/%(api)s/%(version)s/python/latest/ PyDoc]
+Documentation for the {api_name!s} in [https://google-api-client-libraries.appspot.com/documentation/{api!s}/{version!s}/python/latest/ PyDoc]
 
-""" % context)
+""".format(**context))
       current_api = api
 
-    page.append('|| [%(uri)s %(dir)s] || %(desc)s ||\n' % context)
+    page.append('|| [{uri!s} {dir!s}] || {desc!s} ||\n'.format(**context))
 
   # Now group the samples by keywords.
   for keyword, keyword_name in KEYWORDS.iteritems():
     if keyword not in keyword_set:
       continue
-    page.append('\n= %s Samples =\n\n' % keyword_name)
+    page.append('\n= {0!s} Samples =\n\n'.format(keyword_name))
     page.append('<table border=1 cellspacing=0 cellpadding=8px>\n')
     for _, keywords, dirname, desc, uri in samples:
       context = keyword_context_from_sample(keywords, dirname, desc, uri)
@@ -235,9 +235,9 @@ Documentation for the %(api_name)s in [https://google-api-client-libraries.appsp
         continue
       page.append("""
 <tr>
-  <td>[%(uri)s %(dir)s] </td>
-  <td> %(desc)s </td>
-</tr>""" % context)
+  <td>[{uri!s} {dir!s}] </td>
+  <td> {desc!s} </td>
+</tr>""".format(**context))
     page.append('</table>\n')
 
   print(''.join(page))

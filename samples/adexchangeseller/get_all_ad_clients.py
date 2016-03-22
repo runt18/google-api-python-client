@@ -44,11 +44,10 @@ def main(argv):
       result = request.execute()
       ad_clients = result['items']
       for ad_client in ad_clients:
-        print(('Ad client for product "%s" with ID "%s" was found. '
-               % (ad_client['productCode'], ad_client['id'])))
+        print(('Ad client for product "{0!s}" with ID "{1!s}" was found. '.format(ad_client['productCode'], ad_client['id'])))
 
-        print(('\tSupports reporting: %s' %
-               (ad_client['supportsReporting'] and 'Yes' or 'No')))
+        print(('\tSupports reporting: {0!s}'.format(
+               (ad_client['supportsReporting'] and 'Yes' or 'No'))))
 
       request = service.adclients().list_next(request, result)
 

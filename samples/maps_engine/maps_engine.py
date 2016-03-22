@@ -102,7 +102,7 @@ def UploadShapefile(service, project_id, shapefile_prefix):
   files = []
   for suffix in suffixes:
     files.append({
-        "filename": "%s.%s" % (shapefile_prefix, suffix)
+        "filename": "{0!s}.{1!s}".format(shapefile_prefix, suffix)
     })
   metadata = {
       "projectId": project_id,
@@ -122,7 +122,7 @@ def UploadShapefile(service, project_id, shapefile_prefix):
 
   # And now upload each of the files individually, passing in the table id.
   for suffix in suffixes:
-    shapefile = "%s.%s" % (shapefile_prefix, suffix)
+    shapefile = "{0!s}.{1!s}".format(shapefile_prefix, suffix)
     media_body = MediaFileUpload(shapefile, mimetype="application/octet-stream")
     logging.info("uploading %s", shapefile)
 

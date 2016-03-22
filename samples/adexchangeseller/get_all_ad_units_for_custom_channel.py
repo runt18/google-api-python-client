@@ -60,8 +60,7 @@ def main(argv):
       result = request.execute()
       ad_units = result['items']
       for ad_unit in ad_units:
-        print(('Ad unit with code "%s", name "%s" and status "%s" was found. ' %
-               (ad_unit['code'], ad_unit['name'], ad_unit['status'])))
+        print(('Ad unit with code "{0!s}", name "{1!s}" and status "{2!s}" was found. '.format(ad_unit['code'], ad_unit['name'], ad_unit['status'])))
 
       request = service.adunits().list_next(request, result)
 

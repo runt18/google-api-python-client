@@ -45,8 +45,7 @@ def main(argv):
       result = request.execute()
       saved_reports = result['items']
       for saved_report in saved_reports:
-        print(('Saved report with ID "%s" and name "%s" was found.'
-               % (saved_report['id'], saved_report['name'])))
+        print(('Saved report with ID "{0!s}" and name "{1!s}" was found.'.format(saved_report['id'], saved_report['name'])))
 
       request = service.reports().saved().list_next(request, result)
 

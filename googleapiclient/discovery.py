@@ -203,7 +203,7 @@ def build(serviceName,
                                       cache)
   except HttpError as e:
     if e.resp.status == http_client.NOT_FOUND:
-      raise UnknownApiNameOrVersion("name: %s  version: %s" % (serviceName,
+      raise UnknownApiNameOrVersion("name: {0!s}  version: {1!s}".format(serviceName,
                                                                version))
     else:
       raise e
@@ -407,11 +407,11 @@ def _media_path_url_from_info(root_desc, path_url):
   Returns:
     String; the absolute URI for media upload for the API method.
   """
-  return '%(root)supload/%(service_path)s%(path)s' % {
+  return '{root!s}upload/{service_path!s}{path!s}'.format(**{
       'root': root_desc['rootUrl'],
       'service_path': root_desc['servicePath'],
       'path': path_url,
-  }
+  })
 
 
 def _fix_up_parameters(method_desc, root_desc, http_method):
@@ -673,7 +673,7 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
 
     for name in six.iterkeys(kwargs):
       if name not in parameters.argmap:
-        raise TypeError('Got an unexpected keyword argument "%s"' % name)
+        raise TypeError('Got an unexpected keyword argument "{0!s}"'.format(name))
 
     # Remove args that have a value of None.
     keys = list(kwargs.keys())
@@ -683,7 +683,7 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
 
     for name in parameters.required_params:
       if name not in kwargs:
-        raise TypeError('Missing required parameter "%s"' % name)
+        raise TypeError('Missing required parameter "{0!s}"'.format(name))
 
     for name, regex in six.iteritems(parameters.pattern_params):
       if name in kwargs:
@@ -694,8 +694,7 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
         for pvalue in pvalues:
           if re.match(regex, pvalue) is None:
             raise TypeError(
-                'Parameter "%s" value "%s" does not match the pattern "%s"' %
-                (name, pvalue, regex))
+                'Parameter "{0!s}" value "{1!s}" does not match the pattern "{2!s}"'.format(name, pvalue, regex))
 
     for name, enums in six.iteritems(parameters.enum_params):
       if name in kwargs:
@@ -710,8 +709,7 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
         for value in values:
           if value not in enums:
             raise TypeError(
-                'Parameter "%s" value "%s" is not an allowed value in "%s"' %
-                (name, value, str(enums)))
+                'Parameter "{0!s}" value "{1!s}" is not an allowed value in "{2!s}"'.format(name, value, str(enums)))
 
     actual_query_params = {}
     actual_path_params = {}
@@ -765,7 +763,7 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
 
       # Check the maxSize
       if media_upload.size() is not None and media_upload.size() > maxSize > 0:
-        raise MediaUploadSizeError("Media larger than: %s" % maxSize)
+        raise MediaUploadSizeError("Media larger than: {0!s}".format(maxSize))
 
       # Use the media path uri for media uploads
       expanded_url = uritemplate.expand(mediaPathUrl, params)
@@ -814,7 +812,7 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
                                      'boundary="%s"') % multipart_boundary
           url = _add_query_parameter(url, 'uploadType', 'multipart')
 
-    logger.info('URL being requested: %s %s' % (httpMethod,url))
+    logger.info('URL being requested: {0!s} {1!s}'.format(httpMethod, url))
     return self._requestBuilder(self._http,
                                 model.response,
                                 url,
@@ -862,14 +860,14 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
             schema.prettyPrintByName(paramdesc['$ref'])))
     else:
       paramtype = paramdesc.get('type', 'string')
-      docs.append('  %s: %s, %s%s%s\n' % (arg, paramtype, paramdoc, required,
+      docs.append('  {0!s}: {1!s}, {2!s}{3!s}{4!s}\n'.format(arg, paramtype, paramdoc, required,
                                           repeated))
     enum = paramdesc.get('enum', [])
     enumDesc = paramdesc.get('enumDescriptions', [])
     if enum and enumDesc:
       docs.append('    Allowed values\n')
       for (name, desc) in zip(enum, enumDesc):
-        docs.append('      %s - %s\n' % (name, desc))
+        docs.append('      {0!s} - {1!s}\n'.format(name, desc))
   if 'response' in methodDesc:
     if methodName.endswith('_media'):
       docs.append('\nReturns:\n  The media object as a string.\n\n    ')
@@ -922,7 +920,7 @@ Returns:
 
     request.uri = uri
 
-    logger.info('URL being requested: %s %s' % (methodName,uri))
+    logger.info('URL being requested: {0!s} {1!s}'.format(methodName, uri))
 
     return request
 
@@ -1004,7 +1002,7 @@ class Resource(object):
   def _add_basic_methods(self, resourceDesc, rootDesc, schema):
     # If this is the root Resource, add a new_batch_http_request() method.
     if resourceDesc == rootDesc:
-      batch_uri = '%s%s' % (
+      batch_uri = '{0!s}{1!s}'.format(
         rootDesc['rootUrl'], rootDesc.get('batchPath', 'batch'))
       def new_batch_http_request(callback=None):
         """Create a BatchHttpRequest object based on the discovery document.

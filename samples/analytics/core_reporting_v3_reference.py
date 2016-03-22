@@ -87,12 +87,11 @@ def main(argv):
 
   except TypeError as error:
     # Handle errors in constructing a query.
-    print(('There was an error in constructing your query : %s' % error))
+    print(('There was an error in constructing your query : {0!s}'.format(error)))
 
   except HttpError as error:
     # Handle API errors.
-    print(('Arg, there was an API error : %s : %s' %
-           (error.resp.status, error._get_reason())))
+    print(('Arg, there was an API error : {0!s} : {1!s}'.format(error.resp.status, error._get_reason())))
 
   except AccessTokenRefreshError:
     # Handle Auth errors.
@@ -144,10 +143,10 @@ def print_report_info(results):
   """
 
   print('Report Infos:')
-  print('Contains Sampled Data = %s' % results.get('containsSampledData'))
-  print('Kind                  = %s' % results.get('kind'))
-  print('ID                    = %s' % results.get('id'))
-  print('Self Link             = %s' % results.get('selfLink'))
+  print('Contains Sampled Data = {0!s}'.format(results.get('containsSampledData')))
+  print('Kind                  = {0!s}'.format(results.get('kind')))
+  print('ID                    = {0!s}'.format(results.get('id')))
+  print('Self Link             = {0!s}'.format(results.get('selfLink')))
   print()
 
 
@@ -159,14 +158,14 @@ def print_pagination_info(results):
   """
 
   print('Pagination Infos:')
-  print('Items per page = %s' % results.get('itemsPerPage'))
-  print('Total Results  = %s' % results.get('totalResults'))
+  print('Items per page = {0!s}'.format(results.get('itemsPerPage')))
+  print('Total Results  = {0!s}'.format(results.get('totalResults')))
 
   # These only have values if other result pages exist.
   if results.get('previousLink'):
-    print('Previous Link  = %s' % results.get('previousLink'))
+    print('Previous Link  = {0!s}'.format(results.get('previousLink')))
   if results.get('nextLink'):
-    print('Next Link      = %s' % results.get('nextLink'))
+    print('Next Link      = {0!s}'.format(results.get('nextLink')))
   print()
 
 
@@ -179,11 +178,11 @@ def print_profile_info(results):
 
   print('Profile Infos:')
   info = results.get('profileInfo')
-  print('Account Id      = %s' % info.get('accountId'))
-  print('Web Property Id = %s' % info.get('webPropertyId'))
-  print('Profile Id      = %s' % info.get('profileId'))
-  print('Table Id        = %s' % info.get('tableId'))
-  print('Profile Name    = %s' % info.get('profileName'))
+  print('Account Id      = {0!s}'.format(info.get('accountId')))
+  print('Web Property Id = {0!s}'.format(info.get('webPropertyId')))
+  print('Profile Id      = {0!s}'.format(info.get('profileId')))
+  print('Table Id        = {0!s}'.format(info.get('tableId')))
+  print('Profile Name    = {0!s}'.format(info.get('profileName')))
   print()
 
 
@@ -197,7 +196,7 @@ def print_query(results):
   print('Query Parameters:')
   query = results.get('query')
   for key, value in query.iteritems():
-    print('%s = %s' % (key, value))
+    print('{0!s} = {1!s}'.format(key, value))
   print()
 
 
@@ -216,10 +215,10 @@ def print_column_headers(results):
   headers = results.get('columnHeaders')
   for header in headers:
     # Print Dimension or Metric name.
-    print('\t%s name:    = %s' % (header.get('columnType').title(),
+    print('\t{0!s} name:    = {1!s}'.format(header.get('columnType').title(),
                                   header.get('name')))
-    print('\tColumn Type = %s' % header.get('columnType'))
-    print('\tData Type   = %s' % header.get('dataType'))
+    print('\tColumn Type = {0!s}'.format(header.get('columnType')))
+    print('\tData Type   = {0!s}'.format(header.get('dataType')))
     print()
 
 
@@ -231,15 +230,15 @@ def print_totals_for_all_results(results):
   """
 
   print('Total Metrics For All Results:')
-  print('This query returned %s rows.' % len(results.get('rows')))
-  print(('But the query matched %s total results.' %
-         results.get('totalResults')))
+  print('This query returned {0!s} rows.'.format(len(results.get('rows'))))
+  print(('But the query matched {0!s} total results.'.format(
+         results.get('totalResults'))))
   print('Here are the metric totals for the matched total results.')
   totals = results.get('totalsForAllResults')
 
   for metric_name, metric_total in totals.iteritems():
-    print('Metric Name  = %s' % metric_name)
-    print('Metric Total = %s' % metric_total)
+    print('Metric Name  = {0!s}'.format(metric_name))
+    print('Metric Total = {0!s}'.format(metric_total))
     print()
 
 

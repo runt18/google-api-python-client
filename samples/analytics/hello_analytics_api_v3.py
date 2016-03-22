@@ -69,12 +69,11 @@ def main(argv):
 
   except TypeError as error:
     # Handle errors in constructing a query.
-    print(('There was an error in constructing your query : %s' % error))
+    print(('There was an error in constructing your query : {0!s}'.format(error)))
 
   except HttpError as error:
     # Handle API errors.
-    print(('Arg, there was an API error : %s : %s' %
-           (error.resp.status, error._get_reason())))
+    print(('Arg, there was an API error : {0!s} : {1!s}'.format(error.resp.status, error._get_reason())))
 
   except AccessTokenRefreshError:
     # Handle Auth errors.
@@ -153,13 +152,13 @@ def print_results(results):
   """
 
   print()
-  print('Profile Name: %s' % results.get('profileInfo').get('profileName'))
+  print('Profile Name: {0!s}'.format(results.get('profileInfo').get('profileName')))
   print()
 
   # Print header.
   output = []
   for header in results.get('columnHeaders'):
-    output.append('%30s' % header.get('name'))
+    output.append('{0:30!s}'.format(header.get('name')))
   print(''.join(output))
 
   # Print data table.
@@ -167,7 +166,7 @@ def print_results(results):
     for row in results.get('rows'):
       output = []
       for cell in row:
-        output.append('%30s' % cell)
+        output.append('{0:30!s}'.format(cell))
       print(''.join(output))
 
   else:

@@ -55,20 +55,19 @@ def main(argv):
       result = request.execute()
       custom_channels = result['items']
       for custom_channel in custom_channels:
-        print(('Custom channel with id "%s" and name "%s" was found. '
-               % (custom_channel['id'], custom_channel['name'])))
+        print(('Custom channel with id "{0!s}" and name "{1!s}" was found. '.format(custom_channel['id'], custom_channel['name'])))
 
         if 'targetingInfo' in custom_channel:
           print('  Targeting info:')
           targeting_info = custom_channel['targetingInfo']
           if 'adsAppearOn' in targeting_info:
-            print('    Ads appear on: %s' % targeting_info['adsAppearOn'])
+            print('    Ads appear on: {0!s}'.format(targeting_info['adsAppearOn']))
           if 'location' in targeting_info:
-            print('    Location: %s' % targeting_info['location'])
+            print('    Location: {0!s}'.format(targeting_info['location']))
           if 'description' in targeting_info:
-            print('    Description: %s' % targeting_info['description'])
+            print('    Description: {0!s}'.format(targeting_info['description']))
           if 'siteLanguage' in targeting_info:
-            print('    Site language: %s' % targeting_info['siteLanguage'])
+            print('    Site language: {0!s}'.format(targeting_info['siteLanguage']))
 
       request = service.customchannels().list_next(request, result)
 

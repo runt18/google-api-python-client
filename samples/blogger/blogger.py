@@ -53,26 +53,26 @@ def main(argv):
 
       # Retrieve this user's profile information
       thisuser = users.get(userId='self').execute()
-      print('This user\'s display name is: %s' % thisuser['displayName'])
+      print('This user\'s display name is: {0!s}'.format(thisuser['displayName']))
 
       blogs = service.blogs()
 
       # Retrieve the list of Blogs this user has write privileges on
       thisusersblogs = blogs.listByUser(userId='self').execute()
       for blog in thisusersblogs['items']:
-        print('The blog named \'%s\' is at: %s' % (blog['name'], blog['url']))
+        print('The blog named \'{0!s}\' is at: {1!s}'.format(blog['name'], blog['url']))
 
       posts = service.posts()
 
       # List the posts for each blog this user has
       for blog in thisusersblogs['items']:
-        print('The posts for %s:' % blog['name'])
+        print('The posts for {0!s}:'.format(blog['name']))
         request = posts.list(blogId=blog['id'])
         while request is not None:
           posts_doc = request.execute()
           if 'items' in posts_doc and not (posts_doc['items'] is None):
             for post in posts_doc['items']:
-              print('  %s (%s)' % (post['title'], post['url']))
+              print('  {0!s} ({1!s})'.format(post['title'], post['url']))
           request = posts.list_next(request, posts_doc)
 
   except client.AccessTokenRefreshError:

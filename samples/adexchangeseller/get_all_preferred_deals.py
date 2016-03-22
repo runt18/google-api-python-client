@@ -44,13 +44,13 @@ def main(argv):
       if 'items' in result:
         deals = result['items']
         for deal in deals:
-          output = 'Deal id "%s" ' % deal['id']
+          output = 'Deal id "{0!s}" '.format(deal['id'])
 
           if 'advertiserName' in deal:
-            output += 'for advertiser "%s" ' % deal['advertiserName']
+            output += 'for advertiser "{0!s}" '.format(deal['advertiserName'])
 
           if 'buyerNetworkName' in deal:
-            output += 'on network "%s" ' % deal['buyerNetworkName']
+            output += 'on network "{0!s}" '.format(deal['buyerNetworkName'])
 
           output += 'was found.'
           print(output)
